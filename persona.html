@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cápsula Digital - Max</title>
+    <style>
+        /* --- ESTILOS MODERN HACKER --- */
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #0a0a0a; /* Fondo oscuro profundo */
+            color: #00ff41; /* Verde Matrix/Hacker */
+            font-family: 'Courier New', Courier, monospace;
+            overflow: hidden; /* Evita scrolls innecesarios */
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Personaje Guardián */
+        #guardian {
+            position: fixed;
+            width: 80px;
+            pointer-events: none; /* Para que no interfiera con los clics */
+            z-index: 100;
+            transition: transform 0.1s ease-out;
+            filter: drop-shadow(0 0 10px #00f2ff); /* Brillo neón azul */
+        }
+
+        /* Contenedor del Cofre */
+        .container {
+            text-align: center;
+        }
+
+        #cofre {
+            width: 150px;
+            cursor: pointer;
+            transition: transform 0.3s;
+            filter: drop-shadow(0 0 15px #ff00ff); /* Brillo neón rosa */
+        }
+
+        #cofre:hover {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        h1 {
+            text-shadow: 0 0 10px #00ff41;
+            letter-spacing: 2px;
+        }
+
+        /* --- VENTANA MODAL --- */
+        .modal {
+            display: none; /* Oculto por defecto */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: #111;
+            border: 2px solid #00ff41;
+            padding: 40px;
+            text-align: center;
+            border-radius: 15px;
+            box-shadow: 0 0 30px #00ff41;
+            max-width: 400px;
+        }
+
+        #tesoro {
+            width: 100%;
+            margin-top: 20px;
+            border-radius: 10px;
+        }
+
+        .close-btn {
+            margin-top: 20px;
+            background: #00ff41;
+            color: #000;
+            border: none;
+            padding: 10px 20px;
+            font-weight: bold;
+            cursor: pointer;
+            text-transform: uppercase;
+        }
+    </style>
+</head>
+<body>
+
+    <img src="guardian.png" id="guardian" alt="Guardián">
+
+    <div class="container">
+        <h1>SISTEMA ENCRIPTADO</h1>
+        <p>Haz clic en el cofre para desbloquear</p>
+        <img src="cofre.png" id="cofre" alt="Cofre">
+    </div>
+
+    <div id="miModal" class="modal">
+        <div class="modal-content">
+            <h2 style="color: #00f2ff;">¡ACCESO CONCEDIDO!</h2>
+            <p>Bienvenido, <strong>Max</strong>. Has recuperado el archivo:</p>
+            <img src="tesoro.gif" id="tesoro" alt="Tesoro">
+            <br>
+            <button class="close-btn" onclick="cerrarModal()">Cerrar Sistema</button>
+        </div>
+    </div>
+
+    <script>
+        const guardian = document.getElementById('guardian');
+        const cofre = document.getElementById('cofre');
+        const modal = document.getElementById('miModal');
+
+        // --- LÓGICA DE MOVIMIENTO (GUARDIÁN) ---
+        document.addEventListener('mousemove', (e) => {
+            // El guardián se posiciona centrado respecto al cursor
+            const x = e.clientX - 40;
+            const y = e.clientY - 40;
+            
+            // Usamos transform para un movimiento más fluido que top/left
+            guardian.style.transform = `translate(${x}px, ${y}px)`;
+        });
+
+        // --- LÓGICA DE INTERACCIÓN (MODAL) ---
+        cofre.addEventListener('click', () => {
+            modal.style.display = 'flex';
+        });
+
+        function cerrarModal() {
+            modal.style.display = 'none';
+        }
+
+        // Cerrar si se hace clic fuera del contenido de la ventana
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                cerrarModal();
+            }
+        }
+    </script>
+</body>
+</html>
